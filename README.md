@@ -16,34 +16,43 @@ The project is structured as a full-stack monorepo:
 
 ---
 
-## 🔒 Multi-Role Access & Credentials Synchronization
+## 💡 How the Program Works
 
-The platform utilizes a structured access hierarchy representing active roles within the Karnataka police force:
+### 1. The Frontend Dashboard
+*   **Role & Authentication (`RoleProvider.tsx`)**: Controls access levels for Beat Constables, SHOs, and the SP. On startup, it synchronizes login credentials with the central SQLite database.
+*   **Tactical Analytics & Map View (`AppShell.tsx` / Leaflet)**: Displays active incident records, hotspot densities, and AI patrol routes. Swaps between high-density Dark Mode and high-legibility Light Mode.
+*   **FIR Upload & OCR Parsing**: Accepts FIR PDF documents, extracts the textual content via `pdf-parse`, and runs LLM models to auto-categorize gravity, category, and suspects.
 
-| Role Identity | Default Badge ID | Default Passphrase | Access Capabilities |
-| :--- | :--- | :--- | :--- |
-| **Superintendent of Police (SP)** | `sp.ksp` | `ksp123` | Full administrative settings, credentials configuration for all roles, state-wide spatial metrics, ML risk indicators. |
-| **Station House Officer (SHO)** | `sho.ksp` | `ksp123` | Station-level filter sets, patrol dispatch planning, FIR uploads, and local audit logs. |
-| **Beat Constable** | `constable.ksp` | `ksp123` | Route navigation, crime incident forms, and beat assignment checklists. |
+### 2. The Backend API Server
+*   **SQLite Database (`db/connection.ts`)**: Maintains local records. Copies the database file to `/tmp` in production to ensure write access under Zoho Catalyst containers.
+*   **Express Router (`server.ts`)**: Serves data points for incident tables, handles security logins, and proxies forecast queries to the Python microservice.
 
-### Centralized SQLite Credentials Synchronization
-To enable multi-laptop and multi-device collaborative demonstrations, the platform synchronizes customized login credentials using a shared SQLite database:
-1. When the SP edits any login credentials inside the **Credentials Control (Slide 2)** settings tab, changes are instantly written to the backend API (`POST /api/credentials`).
-2. When the application loads on any laptop or browser, the frontend context (`RoleProvider`) fetches the latest active configuration from the database (`GET /api/credentials`), automatically updating the login buttons and validation logic in real-time.
+### 3. The ML Microservice
+*   **FastAPI endpoints**: Computes socio-economic crime correlations and processes spatial risk forecasts.
+
+---
+
+## 🔒 Credentials Synchronization & Multi-Laptop Demos
+
+To enable seamless collaborative presentations across different laptops or browsers, credentials are synchronized dynamically:
+
+1. **Local State & Storage**: When the SP alters credentials under Settings, the changes are stored locally in the browser's `localStorage` for instant responsiveness.
+2. **Centralized Database Write**: Simultaneously, a `POST /api/credentials` request is made to save the updated ID and passcode to the SQLite database.
+3. **Multi-Device Fetch**: When any other laptop loads the web application, the `RoleProvider` queries `GET /api/credentials` to automatically fetch the updated login parameters. This ensures that custom credentials are synchronized universally.
 
 ---
 
 ## 🛠️ Local Setup & Execution Guide
 
-Follow these steps to run the complete monorepo on your local machine:
+Follow these steps to run the complete monorepo locally:
 
 ### 1. Prerequisites
 *   **Node.js**: Version 18.x or 20.x installed.
 *   **Python**: Version 3.10+ installed.
-*   **Git**: For code management.
+*   **Git**: Installed and configured.
 
 ### 2. Initial Setup
-Clone the repository and install the parent monorepo packages:
+Clone the repository and install dependencies:
 ```bash
 # Clone the repository
 git clone https://github.com/vthirumalai882590-gif/CrimePlus_AI.git
@@ -73,7 +82,7 @@ cd ../..
 ```
 
 ### 4. Run the Local Development Servers
-To start the React frontend, Express API server, and FastAPI ML service concurrently, run the following command from the root workspace directory:
+To start the React frontend, Express API server, and FastAPI ML service concurrently, run:
 ```bash
 npm run dev
 ```
@@ -84,32 +93,60 @@ npm run dev
 
 ---
 
-## ☁️ Zoho Catalyst Platform Deployment
+## 🐙 Git/GitHub Team Workflow
 
-The platform is configured to deploy directly to the Zoho Catalyst Serverless platform.
+This repository uses Git for version control and GitHub as the host:
+
+```
+  Laptop A (Dev)  --->  git commit & push  --->  GitHub (main branch)
+  Laptop B (Team) --->  git pull           <---  GitHub (main branch)
+```
+
+### 1. Setting Git Identity (If Prompted)
+If you get an "Author identity unknown" error, configure Git with your details locally inside the folder:
+```bash
+git config user.name "vthirumalai882590-gif"
+git config user.email "vthirumalai882590@gmail.com"
+```
+
+### 2. Saving and Pushing Your Changes
+When you have made modifications on your machine and want to save them to GitHub:
+```bash
+# Stage all modified and new files
+git add .
+
+# Commit changes with a summary message
+git commit -m "feat: updated settings style and credentials sync"
+
+# Push to your GitHub repository
+git push origin main
+```
+
+### 3. Fetching Updates on Other Laptops
+To pull down the latest changes that your teammate pushed to GitHub:
+```bash
+git pull origin main
+```
+
+---
+
+## ☁️ Zoho Catalyst Production Deployment
+
+To compile the latest build and deploy the entire solution live to the Zoho Catalyst Serverless Cloud:
 
 ### 1. Compile the Static React Client
-Run the Vite build command to generate minified build bundles in `apps/web/dist`:
+Generate minified production build files in `apps/web/dist`:
 ```bash
 npm run web:build
 ```
 
-### 2. Log in and Deploy
-Ensure you have the Catalyst CLI installed globally (`npm install -g zcatalyst-cli`), then execute:
+### 2. Run Catalyst Deployment
 ```bash
-# Log in to your Zoho Catalyst Console
+# Log in to your Catalyst Account (if not already logged in)
 catalyst login
 
-# Deploy all functions, AppSail endpoints, and web clients to the cloud
+# Deploy all static pages, AppSail APIs, and functions live
 catalyst deploy
 ```
 
-Once deployment completes, the CLI will output your live URL endpoint (e.g. `https://crimeplus-60077655392.development.catalystserverless.in/app/index.html`).
-
----
-
-## 🎨 Design & Aesthetic System
-
-*   **Dark Mode (Default)**: High-density tactical layout featuring subtle glows, glassmorphism panel backdrops, and deep contrast structures for 24/7 public safety control room monitoring.
-*   **Light Mode**: A clean, accessible light gray interface designed for high daylight legibility, utilizing high-contrast blue interactive elements and clean slate boundaries. 
-*   **Responsive Control Panel**: The system settings modal, located next to the **SYSTEM ONLINE** status badge in the sidebar header, includes tabbed configuration slides to govern API URLs, interfaces, and credential lists easily.
+Once completed, Catalyst will output your live URL endpoint (e.g. `https://crimeplus-60077655392.development.catalystserverless.in/app/index.html`).
