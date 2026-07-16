@@ -1,0 +1,43 @@
+{
+  "nav.ingestion": "ಇಂಜೆಷನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  "nav.dashboard": "ಪರಿಸ್ಥಿತಿ ನಿಯಂತ್ರಣ",
+  "nav.hotspots": "ಹಾಟ್‌ಸ್ಪಾಟ್ ವಿಶ್ಲೇಷಣೆ",
+  "nav.drilldown": "ಜಿಲ್ಲಾ ವಿಶ್ಲೇಷಣೆ",
+  "nav.alerts": "ತುರ್ತು ಎಚ್ಚರಿಕೆಗಳು",
+  "nav.network": "ನೆಟ್‌ವರ್ಕ್ ವಿಶ್ಲೇಷಣೆ",
+  "nav.offenders": "ಅಪರಾಧಿಗಳ ಪಟ್ಟಿ",
+  "nav.risk": "ಅಪಾಯದ ನಮೂನೆಗಳು",
+  "nav.firSearch": "ಎಫ್ಐಆರ್ ಹೋಲಿಕೆ ಶೋಧನೆ",
+  "nav.firIntel": "ಎಫ್ಐಆರ್ ಬುದ್ಧಿಮತ್ತೆ",
+  "nav.festival": "ಹಬ್ಬಗಳ ಮುನ್ಸೂಚನೆ",
+  "nav.patrol": "ಗಸ್ತು ನಿಯೋಜನೆ",
+  "nav.auditLogs": "ಖಾತೆ ತಪಾಸಣೆ ಲಾಗ್",
+  "nav.addRecord": "ದಾಖಲೆ ಸೇರಿಸಿ",
+  
+  "filter.title": "ಫಿಲ್ಟರ್ ಬಾರ್",
+  "filter.district": "ಜಿಲ್ಲೆ",
+  "filter.station": "ಠಾಣೆ",
+  "filter.date": "ಅವಧಿ",
+  "filter.severity": "ತೀವ್ರತೆ",
+  "filter.all": "ಎಲ್ಲಾ ಘಟಕಗಳು",
+  "filter.reset": "ಮರುಹೊಂದಿಸಿ",
+  
+  "role.switcher": "ಕಾರ್ಯನಿರ್ವಹಣಾ ಪಾತ್ರ",
+  "role.constable": "ಕಾನ್ಸ್ಟೇಬಲ್",
+  "role.sho": "ಠಾಣಾಧಿಕಾರಿ (SHO)",
+  "role.sp": "ಪೊಲೀಸ್ ಅಧೀಕ್ಷಕರು (SP)",
+
+  "ui.system": "ಕ್ರೈಮ್ ಪಲ್ಸ್ AI",
+  "ui.status": "ಸಕ್ರಿಯ ಕಮಾಂಡ್ ಪರಿಸರ",
+  "ui.disclaimer": "ಗೌಪ್ಯ // ಆಂತರಿಕ ಎಸ್‌ಸಿಆರ್‌ಬಿ ಪ್ರದರ್ಶನಕ್ಕಾಗಿ ಮಾತ್ರ // ಕೃತಕ ಡೇಟಾ ಸೆಟ್",
+  "ui.alert": "ಎಚ್ಚರಿಕೆ ಮಾಹಿತಿ",
+  "ui.recent": "ಇತ್ತೀಚಿನ ಘಟನೆಗಳು",
+
+  "audit.title": "ಪಾರದರ್ಶಕತೆ ಮತ್ತು ಹೊಣೆಗಾರಿಕೆ ತಪಾಸಣೆ ಹಾದಿ",
+  "audit.subtitle": "ಕಾರ್ಯನಿರ್ವಹಣಾ ಅಧಿಕಾರಿಗಳ ತಪಾಸಣೆ ದಾಖಲೆ",
+  "audit.colId": "ಲಾಗ್ ಐಡಿ",
+  "audit.colTime": "ಸಮಯ",
+  "audit.colRole": "ಅಧಿಕಾರಿಯ ಪಾತ್ರ",
+  "audit.colAction": "ಕೈಗೊಂಡ ಕ್ರಮ",
+  "audit.colDetails": "ನಿರ್ಧಾರದ ವಿವರಣೆ ಮಾಹಿತಿ"
+}

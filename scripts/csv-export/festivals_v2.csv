@@ -1,0 +1,6 @@
+festival_id,name,incident_date,district,crowd_density,risk_multiplier,reallocation_required
+FES-001,Ganesh Chaturthi,2026-07-16,BENGALURU_CITY,HIGH,1.85,1
+FES-002,Mysuru Dasara Procession,2026-07-23,MYSURU,HIGH,2.4,1
+FES-003,Mangaluru Dasara,2026-07-25,MANGALURU,MEDIUM,1.5,0
+FES-004,Kanakadasa Jayanthi,2026-07-31,HUBBALLI_DHARWAD,LOW,1.15,0
+FES-005,Belagavi Rajyotsava,2026-07-19,BELAGAVI,MEDIUM,1.45,1

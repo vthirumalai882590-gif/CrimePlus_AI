@@ -1,0 +1,21 @@
+{
+  "name": "crimepulse-ai",
+  "version": "1.0.0",
+  "description": "Command-intelligence grade crime analytics platform for Karnataka SCRB Datathon",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "web:dev": "npm run dev --workspace=apps/web",
+    "web:build": "npm run build --workspace=apps/web",
+    "api:dev": "npm run dev --workspace=apps/api",
+    "api:build": "npm run build --workspace=apps/api",
+    "ml:dev": "cd apps/ml-service && .venv\\Scripts\\python -m uvicorn app.main:app --port 8000",
+    "dev": "concurrently \"npm run api:dev\" \"npm run web:dev\" \"npm run ml:dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

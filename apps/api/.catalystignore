@@ -1,0 +1,6 @@
+uploads/
+src/
+tsconfig.json
+nodemon.json
+crimepulse.db-wal
+crimepulse.db-shm

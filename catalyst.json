@@ -1,0 +1,16 @@
+{
+  "client": {
+    "name": "crimepulse-web",
+    "source": "apps/web/dist"
+  },
+  "appsail": [
+    {
+      "name": "crimepulse-api",
+      "source": "apps/api"
+    },
+    {
+      "source": "apps/ml-service",
+      "name": "CrimePulse-ml"
+    }
+  ]
+}

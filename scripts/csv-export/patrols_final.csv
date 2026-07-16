@@ -1,0 +1,8 @@
+patrol_id,patrol_unit,district,station,assigned_officers,latitude,longitude,status
+PAT-001,Bengaluru Hawk-1,BENGALURU_CITY,Koramangala PS,"Constable Gowda, Constable Patil",12.939082557279082,77.61855182680767,DISPATCHED
+PAT-002,Bengaluru Hawk-2,BENGALURU_CITY,Whitefield PS,"Constable Shivakumar, Constable Naik",12.972683771298897,77.74464209096087,DISPATCHED
+PAT-003,Mysuru Eagle-1,MYSURU,Devaraja PS,"Constable Swamy, Constable Raju",12.309960347380846,76.65200977768144,DISPATCHED
+PAT-004,Mysuru Eagle-2,MYSURU,Lashkar PS,"Constable Basappa, Constable Siddappa",12.316,76.655,DISPATCHED
+PAT-005,Hubballi Cheetah-1,HUBBALLI_DHARWAD,Hubballi Town PS,"Constable Joshi, Constable Pujar",15.34976345319884,75.13144117367987,DISPATCHED
+PAT-006,Mangaluru Dolphin-1,MANGALURU,Pandeshwar PS,"Constable Fernandes, Constable D'Souza",12.857573711521313,74.84756885322554,DISPATCHED
+PAT-007,Belagavi Panther-1,BELAGAVI,Khade Bazar PS,"Constable Patil, Constable Kadam",15.854074546235601,74.50934928803393,DISPATCHED

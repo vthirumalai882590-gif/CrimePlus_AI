@@ -1,0 +1,6 @@
+{
+  "buildPath": ".",
+  "command": "node start.js",
+  "stack": "node22",
+  "memory": 512
+}

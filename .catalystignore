@@ -1,0 +1,25 @@
+/node_modules/
+/apps/web/node_modules/
+.git/
+.github/
+.vscode/
+.idea/
+*.log
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Python virtual environments & cache (never upload to Catalyst)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+build/
+
+# Web build output (already deployed as client)
+/apps/web/dist/

@@ -1,0 +1,24 @@
+# Migration credentials
+.env.migrate
+
+# Packages & builds
+node_modules/
+dist/
+.venv/
+__pycache__/
+
+# Local Environment / Configs
+.env
+.env.*
+!.env.example
+
+# Large backup archives in root
+*.tar.gz
+*.zip
+
+# SQLite temporary/journal files
+*.db-shm
+*.db-wal
+
+# Scratch files
+scratch/

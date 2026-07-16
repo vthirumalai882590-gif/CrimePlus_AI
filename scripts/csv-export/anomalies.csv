@@ -1,0 +1,6 @@
+id,district,station,metric,baseline,current_value,deviation_score,event_timestamp,status
+ANM-001,BENGALURU_CITY,Koramangala PS,Cyber Crime Spike,12.4,28.5,2.3,2026-07-09T09:19:08.012370,ACKNOWLEDGED
+ANM-002,BENGALURU_CITY,Vidhana Soudha PS,Protest Gathering Deviation,1.2,5,4.1,2026-07-10T09:19:08.012389,ACKNOWLEDGED
+ANM-003,MYSURU,Devaraja PS,Theft Incident Density,8,17.5,2.18,2026-07-08T09:19:08.012401,UNACKNOWLEDGED
+ANM-004,MANGALURU,Ullal PS,Assault Frequency Rise,4.1,9.2,2.24,2026-07-06T09:19:08.012411,ACKNOWLEDGED
+ANM-005,HUBBALLI_DHARWAD,Vidyanagar PS,Drug seizure count,2,6.5,3.25,2026-07-10T21:19:08.012421,ACKNOWLEDGED
