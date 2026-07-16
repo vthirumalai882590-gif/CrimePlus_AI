@@ -16,29 +16,58 @@ The project is structured as a full-stack monorepo:
 
 ---
 
-## 💡 How the Program Works
+## 💡 How the Project Works (Technical Specifications)
 
-### 1. The Frontend Dashboard
-*   **Role & Authentication (`RoleProvider.tsx`)**: Controls access levels for Beat Constables, SHOs, and the SP. On startup, it synchronizes login credentials with the central SQLite database.
-*   **Tactical Analytics & Map View (`AppShell.tsx` / Leaflet)**: Displays active incident records, hotspot densities, and AI patrol routes. Swaps between high-density Dark Mode and high-legibility Light Mode.
-*   **FIR Upload & OCR Parsing**: Accepts FIR PDF documents, extracts the textual content via `pdf-parse`, and runs LLM models to auto-categorize gravity, category, and suspects.
+This section explains the core data flows, processing pipelines, and technical logic behind each major module of the platform.
 
-### 2. The Backend API Server
-*   **SQLite Database (`db/connection.ts`)**: Maintains local records. Copies the database file to `/tmp` in production to ensure write access under Zoho Catalyst containers.
-*   **Express Router (`server.ts`)**: Serves data points for incident tables, handles security logins, and proxies forecast queries to the Python microservice.
+```
+                  ┌────────────────────────────────────────┐
+                  │          Vite + React Client           │
+                  │  (GIS Leaflet Map, Charts, OCR Upload) │
+                  └──────────────────┬─────────────────────┘
+                                     │
+                     HTTP Requests   │  JSON Payload
+                     & File Uploads  ▼
+                  ┌────────────────────────────────────────┐
+                  │         Express API Server             │
+                  │   (SQLite Controller, PDF Parser)       │
+                  └──────┬───────────────────┬─────────────┘
+                         │                   │
+             SQL Queries │                   │ Fetch Forecasts
+                         ▼                   ▼
+                  ┌──────────────┐   ┌─────────────────────┐
+                  │  SQLite DB   │   │ Python FastAPI ML   │
+                  │  (Local/Tmp) │   │ (Risk Models, Stats)│
+                  └──────────────┘   └─────────────────────┘
+```
 
-### 3. The ML Microservice
-*   **FastAPI endpoints**: Computes socio-economic crime correlations and processes spatial risk forecasts.
+### 1. Spatial Analytics & GIS Hotspot Mapping
+*   **Data Retrieval**: The React client queries the `/api/incidents` endpoint, passing active filter parameters (such as District, Police Station, Crime Type, and Date Range).
+*   **Backend Aggregation**: The Express API queries the SQLite database, executing filtered SQL joins across reference lookup tables (`Unit`, `District`, `GravityOffence`, `CrimeSubHead`).
+*   **Frontend GIS Rendering**: The filtered coordinates (Latitude and Longitude) are loaded into the **Leaflet map engine**. The client dynamically overlays **heatmaps** and **clustered markers** representing density-based crime zones across Karnataka.
 
----
+### 2. Predictive Patrol Route Optimization
+*   **Algorithm Goal**: Recommends highly efficient routes for Beat Constables patrolling high-risk zones.
+*   **Spatial Grid Generation**: The backend analyzes incident locations and groups them into density grids.
+*   **Route Calculation**: The patrol routing engine runs a pathfinding algorithm connecting the highest-density nodes. It draws polyline paths on the Leaflet map, guiding the Beat Constable through high-priority checkpoints.
 
-## 🔒 Credentials Synchronization & Multi-Laptop Demos
+### 3. FIR Document Ingestion, OCR & AI Classification
+*   **File Upload**: The Station House Officer (SHO) uploads an FIR PDF document via the dashboard portal.
+*   **OCR Parsing**: The Express backend parses the binary buffer of the uploaded file using `pdf-parse`, extracting the raw text structure.
+*   **Text Classification**:
+    *   The extracted text is processed by a text classifier.
+    *   It extracts critical case metrics such as **Crime Category** (e.g., Theft, Assault), **Severity/Gravity** (Heinous vs. Non-Heinous), **Suspect Names**, and **Incident Timestamps**.
+    *   The parsed FIR metadata is saved to the SQLite database and shown instantly in the dashboard logs.
 
-To enable seamless collaborative presentations across different laptops or browsers, credentials are synchronized dynamically:
+### 4. Local Database & Persistent SQLite Architecture
+*   **Standalone Database**: The app uses SQLite (`better-sqlite3` locally, with a `node:sqlite` fallback). This bypasses Zoho Catalyst ZCQL join limits (4 joins max), allowing full relational database processing.
+*   **Production Portability**: Zoho AppSail runs in a read-only container. On container startup, the backend automatically copies the template SQLite database (`crimepulse.db`) to the writable `/tmp` directory. All active database updates (such as adding incidents or modifying credentials) read/write directly to `/tmp/crimepulse.db`.
 
-1. **Local State & Storage**: When the SP alters credentials under Settings, the changes are stored locally in the browser's `localStorage` for instant responsiveness.
-2. **Centralized Database Write**: Simultaneously, a `POST /api/credentials` request is made to save the updated ID and passcode to the SQLite database.
-3. **Multi-Device Fetch**: When any other laptop loads the web application, the `RoleProvider` queries `GET /api/credentials` to automatically fetch the updated login parameters. This ensures that custom credentials are synchronized universally.
+### 5. Centralized Credentials Synchronization
+*   **Role Context (`RoleProvider.tsx`)**: Exposes states for user authentication.
+*   **Database Syncing**:
+    *   When the Superintendent (SP) saves a new password under **Credentials Control**, a `POST /api/credentials` updates the central SQLite credentials table.
+    *   When any computer or browser tab opens the login page, it makes a `GET /api/credentials` request to fetch the customized configurations, ensuring the new credentials sync instantly across all laptops.
 
 ---
 
