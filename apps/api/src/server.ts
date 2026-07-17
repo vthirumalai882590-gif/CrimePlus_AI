@@ -1568,9 +1568,9 @@ app.post('/api/ai/fir-summarize', async (req: Request, res: Response) => {
       }
     }
 
-    // In local development: use LLM (Groq or Gemini) if key is present
+    // Use LLM (Groq or Gemini) if key is present
     const hasLLMKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
-    if (hasLLMKey && !catalystMode) {
+    if (hasLLMKey) {
       try {
         const prompt = `You are a police data extraction assistant for Karnataka Police. Extract structured fields from this First Information Report text and respond ONLY with a valid JSON object with these exact keys: crime_type (one of: THEFT/ASSAULT/FRAUD/CYBER/DRUGS/KIDNAPPING/MURDER), accused_name, aliases (array), district, station, date (YYYY-MM-DD), time (HH:MM), mo_tags (array of modus operandi keywords), weapon_used, property_stolen, complainant_name, severity (LOW/MEDIUM/HIGH). FIR TEXT:\n\n${rawText}`;
         const result = await callLLM(prompt);
@@ -1746,9 +1746,9 @@ app.post('/api/ai/nl-query', async (req: Request, res: Response) => {
       }
     }
 
-    // In local development: use LLM (Groq or Gemini) if key is present
+    // Use LLM (Groq or Gemini) if key is present
     const hasLLMKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
-    if (hasLLMKey && !catalystMode) {
+    if (hasLLMKey) {
       try {
         const schema = { district: 'BENGALURU_CITY|MYSURU|MANGALURU|HUBBALLI_DHARWAD|BELAGAVI|null', crime_type: 'THEFT|ASSAULT|FRAUD|CYBER|DRUGS|KIDNAPPING|null', severity: 'LOW|MEDIUM|HIGH|null', dateRange: '30d|90d|1y|ALL|null', station: 'string|null' };
         const prompt = `Extract query filters from this police officer question. Respond ONLY with valid JSON matching this schema: ${JSON.stringify(schema)}. Question: "${question}"`;
@@ -1925,9 +1925,9 @@ User Message: "${message}"`;
       }
     }
     
-    // In local development: use LLM (Groq or Gemini) if key is present
+    // Use LLM (Groq or Gemini) if key is present
     const hasLLMKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
-    if (hasLLMKey && !catalystMode) {
+    if (hasLLMKey) {
       try {
         const prompt = `You are a Senior Karnataka State Police Intelligence Officer (KSP Chatbot). Answer conversational queries from fellow officers based on this real-time database context.
 Incidents database summary: ${JSON.stringify(compactIncidents)}
