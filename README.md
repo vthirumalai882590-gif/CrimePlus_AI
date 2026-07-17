@@ -515,10 +515,4 @@ Zoho AppSail runs a **read‑only** container. On startup, the API copies the bu
 
 ---
 
-## 15. Known Limitations
 
-* All shipped data is **synthetic**; there is no connection to any real CCTNS/SCRB production system.
-* The demo authentication layer (`RoleProvider.tsx` + `/api/credentials`) is a lightweight, self‑contained mechanism for the hackathon — it is **not** a substitute for a real identity/authorization system in production.
-* Because Zoho AppSail containers are read‑only outside `/tmp`, data written in production does not persist across redeploys/restarts unless externalized to a durable store.
-* Several "AI" features (FIR summarization, chat assistant) require a configured `GROQ_API_KEY` or `GEMINI_API_KEY`; without one, those specific endpoints degrade gracefully but remain non‑functional.
-* The `client/` directory is a minimal legacy/placeholder static page and is unrelated to the production dashboard in `apps/web/`.
